@@ -3,7 +3,7 @@
 ### STEP 1: Principle Component Analysis
 * convert snp table file to .geno, .ind and .snp files (perl script `VCFtable2eigen_geno_snp_ind.pl` needed, which is in the scripts subdirectory)
 
-      perl VCFtable2eigen_geno_snp_ind.pl <table file> <name.geno> <name.ind> <name.snp>
+      perl VCFtable2eigen_geno_snp_ind.pl <table file> <name.geno> <name.snp> <name.ind>
 
   For example, `4year.snp.results.table.chr1` is my input <table file> and the three output files are `4year.snp.chr1.geno`, `4year.snp.chr1.ind` and `4year.snp.chr1.snp`.
 
