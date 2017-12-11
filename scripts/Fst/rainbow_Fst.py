@@ -17,7 +17,7 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('-i','--input',metavar='File',dest='input',help='input file',type=open,required=True)
 parser.add_argument('-o','--output',metavar='File',dest='output',help='output file directory',type=str,required=True)
-parser.add_argument('-t','--threshold',metavar='Int',dest='trhd',help='threshold',type=float,default=0.15)
+#parser.add_argument('-t','--threshold',metavar='Int',dest='trhd',help='threshold',type=float,default=0.15)
 parser.add_argument('-c','--color',metavar='Int',dest='color',help='color mode',type=int,default=8)
 args = parser.parse_args()
 ###### arguments ######
@@ -43,6 +43,23 @@ def rainbow_Fst():
             if i == n[0]:
                 ab[i].append(n[1])
     #return ab
+
+    ## find maximum and min##
+    ma = 0
+    mi = 0
+    for i in ab.keys():
+        if max(ab[i]) > ma:
+            ma = max(ab[i])
+        else:
+            ma = ma
+
+        if min(ab[i]) < mi:
+            mi = min(ab[i])
+        else:
+            mi = mi
+    #return m
+    ## find maximum ##
+
     # calculate length
     abl = {}
     for ii in ab.keys():
@@ -96,10 +113,11 @@ def rainbow_Fst():
                 #print(cvalue[iii])
                 plt.scatter(range(sum(l[0:iii-1])+1,sum(l[0:iii])+1),ab[iii],edgecolor = 'none',s = 12,c = cvalue[iii],alpha=0.65)
 
-    plt.hlines(0.40, 0, sum(l),linestyles = 'dashed',color=(0.82,0.22,0.64),linewidth=0.8,alpha=0.65)
+    #plt.hlines(0.40, 0, sum(l),linestyles = 'dashed',color=(0.82,0.22,0.64),linewidth=0.8,alpha=0.65)
     #plt.show()
     ## plot information
-    plt.ylim(args.trhd,0.55)
+
+    plt.ylim(mi,ma+0.01)
     plt.xlim(0,sum(l))
 
     ## set tick
@@ -111,12 +129,11 @@ def rainbow_Fst():
     plt.axes().get_xaxis().set_visible(False)
     ####
     efp = FP('Times New Roman')
-    plt.title('Fst (>= {}) among genome SNPs'.format(args.trhd),fontsize=16,fontproperties=efp)
+    plt.title('Fst (>= {}) among genome SNPs'.format(mi),fontsize=16,fontproperties=efp)
     plt.xlabel('relative position',fontsize=14,fontproperties=efp)
     plt.ylabel('Fst',fontsize=14,fontproperties=efp)
     plt.tick_params(axis='both',labelsize=10)
     #print(args.output)
     #/Users/funnyboo/Desktop
     plt.savefig('{}/name.pdf'.format(args.output),bbox_inches='tight')
-
 rainbow_Fst()
