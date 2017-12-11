@@ -2,13 +2,15 @@
 #!/usr/bin/env python
 
 from collections import defaultdict
+from matplotlib.font_manager import FontProperties as FP
 import matplotlib.pyplot as plt
+import numpy as np
 import argparse
 
 ###### arguments ######
 parser = argparse.ArgumentParser()
 parser.add_argument('-i','--input',metavar='File',dest='input',help='input file',type=open,required=True)
-parser.add_argument('-t','--threshold',metavar='Int',dest='trhd',help='threshold',type=float,required=True)
+parser.add_argument('-t','--threshold',metavar='Int',dest='trhd',help='threshold',type=float,default=0.15)
 args = parser.parse_args()
 ###### arguments ######
 
@@ -19,7 +21,7 @@ args = parser.parse_args()
 ## 14      14      1850    0.0169749216300928
 
 # load numeric matrix from .txt file
-def loadData():
+def plot_Fst():
     # define a blank for coming input numeric data
     X = []
     for line in args.input:
@@ -45,31 +47,49 @@ def loadData():
         l.append(abl[i])
     #print(l)
     ######################
+    ## color ##
+    cr = (0.82,0.28,0.27)
+    cy = (0.82,0.72,0.27)
+    cg = (0.51,0.84,0.27)
+    cgb = (0.35,0.84,0.42)
+    cc = (0.30,0.80,0.82)
+    cb = (0.27,0.34,0.82)
+    cp = (0.55,0.22,0.82)
+    cm = (0.82,0.22,0.64)
+    ## color ##
+    efp = FP('Times New Roman')
+
     for iii in abl.keys():
         if iii == 1:
             #print(range(1,abl[iii]+1))
             #print(ab[iii])
-            plt.scatter(range(1,abl[iii]+1),ab[iii],edgecolor = 'none',s = 12,c = (1,0,0))
+            plt.scatter(range(1,abl[iii]+1),ab[iii],edgecolor = 'none',s = 12,c = cr,alpha=0.65)
         elif iii == 2:
             #print(range(l[0]+1,sum(l[0:2])+1))
             #print(ab[iii])
-            plt.scatter(range(l[0]+1,sum(l[0:2])+1),ab[iii],edgecolor = 'none',s = 12,c = (1,0.502,0))
+            plt.scatter(range(l[0]+1,sum(l[0:2])+1),ab[iii],edgecolor = 'none',s = 12,c = cy,alpha=0.65)
         else:
             #print(range(sum(l[0:iii-1])+1,sum(l[0:iii])+1))
             #print(ab[iii])
-            cvalue = ['n','n','n',(1,0.749,0),(1,1,0),(0.749,1,0),(0,1,0),(0,1,0.749),(0,1,1),(0,0.749,1),(0,0.512,1),(0,0.39,1),(0.502,0,1),(0.749,0,1),(1,0,1),(1,0,0.749),(1,0,0.502),(1,0,0),(1,0.502,0),(1,0.749,0),(1,1,0),(0.749,1,0),(0,1,0),(0,1,0.749),(0,1,1),(0,0.749,1),(0,0.512,1),(0,0.39,1),(0.502,0,1),(0.749,0,1),(1,0,1),(1,0,0.749),(1,0,0.502)]
-            plt.scatter(range(sum(l[0:iii-1])+1,sum(l[0:iii])+1),ab[iii],edgecolor = 'none',s = 12,c = cvalue[iii])
+            cvalue = ['n','n','n',cg,cgb,cc,cb,cp,cm,cr,cy,cg,cgb,cc,cb,cp,cm,cr,cy,cg,cgb,cc,cb,cp,cm,cr,cy,cg,cgb,cc,cb,cp,cm,cr,cy]
+            plt.scatter(range(sum(l[0:iii-1])+1,sum(l[0:iii])+1),ab[iii],edgecolor = 'none',s = 12,c = cvalue[iii],alpha=0.65)
     #plt.show()
     ## plot information
     plt.ylim(args.trhd,0.55)
     plt.xlim(0,sum(l))
+
+    ## set tick
+    #ax=plt.gca()
+    #ax.set_yticks(np.linspace(0,1,5))
+    #ax.set_yticklabels(('0.15', '0.25', '0.35', '0.45', '0.55'))
+    ##
     ####
-    frame = plt.gca()
-    frame.axes.get_xaxis().set_visible(False)
+    #plt.axes().get_xaxis().set_visible(False)
     ####
-    plt.title('Fst over {} among genome SNPs'.format(args.trhd),fontsize=14)
-    plt.xlabel('position',fontsize=14)
-    plt.ylabel('Fst',fontsize=14)
+    plt.title('Fst (>= {}) among genome SNPs'.format(args.trhd),fontsize=16,fontproperties=efp)
+    plt.xlabel('relative position',fontsize=14,fontproperties=efp)
+    plt.ylabel('Fst',fontsize=14,fontproperties=efp)
+    plt.tick_params(axis='both',labelsize=10)
     plt.savefig('/Users/funnyboo/Desktop/name.pdf')
 
-loadData()
+plot_Fst()
