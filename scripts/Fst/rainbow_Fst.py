@@ -1,6 +1,12 @@
 # coding: utf-8
 #!/usr/bin/env python
 
+"""
+Created on Sun 10th Dec 2017
+@e-mail: LiuZ@nyu.edu
+@Author: Zihua Liu
+"""
+
 from collections import defaultdict
 from matplotlib.font_manager import FontProperties as FP
 import matplotlib.pyplot as plt
@@ -10,8 +16,9 @@ import argparse
 ###### arguments ######
 parser = argparse.ArgumentParser()
 parser.add_argument('-i','--input',metavar='File',dest='input',help='input file',type=open,required=True)
+parser.add_argument('-o','--output',metavar='File',dest='output',help='output file directory',type=str,required=True)
 parser.add_argument('-t','--threshold',metavar='Int',dest='trhd',help='threshold',type=float,default=0.15)
-parser.add_argument('-c','--color',metavar='Int',dest='color',help='color mode',type=int,default=2)
+parser.add_argument('-c','--color',metavar='Int',dest='color',help='color mode',type=int,default=8)
 args = parser.parse_args()
 ###### arguments ######
 
@@ -22,7 +29,7 @@ args = parser.parse_args()
 ## 14      14      1850    0.0169749216300928
 
 # load numeric matrix from .txt file
-def plot_Fst():
+def rainbow_Fst():
     # define a blank for coming input numeric data
     X = []
     for line in args.input:
@@ -48,7 +55,7 @@ def plot_Fst():
         l.append(abl[i])
     #print(l)
     ######################
-    
+
     if args.color == 2:
         def circle(x):
             if -1*np.cos(np.pi*x) == 1:
@@ -86,7 +93,10 @@ def plot_Fst():
                 #print(range(sum(l[0:iii-1])+1,sum(l[0:iii])+1))
                 #print(ab[iii])
                 cvalue = ['n','n','n',cg,cgb,cc,cb,cp,cm,cr,cy,cg,cgb,cc,cb,cp,cm,cr,cy,cg,cgb,cc,cb,cp,cm,cr,cy,cg,cgb,cc,cb,cp,cm,cr,cy]
+                #print(cvalue[iii])
                 plt.scatter(range(sum(l[0:iii-1])+1,sum(l[0:iii])+1),ab[iii],edgecolor = 'none',s = 12,c = cvalue[iii],alpha=0.65)
+
+    plt.hlines(0.40, 0, sum(l),linestyles = 'dashed',color=(0.82,0.22,0.64),linewidth=0.8,alpha=0.65)
     #plt.show()
     ## plot information
     plt.ylim(args.trhd,0.55)
@@ -98,13 +108,15 @@ def plot_Fst():
     #ax.set_yticklabels(('0.15', '0.25', '0.35', '0.45', '0.55'))
     ##
     ####
-    #plt.axes().get_xaxis().set_visible(False)
+    plt.axes().get_xaxis().set_visible(False)
     ####
     efp = FP('Times New Roman')
     plt.title('Fst (>= {}) among genome SNPs'.format(args.trhd),fontsize=16,fontproperties=efp)
     plt.xlabel('relative position',fontsize=14,fontproperties=efp)
     plt.ylabel('Fst',fontsize=14,fontproperties=efp)
     plt.tick_params(axis='both',labelsize=10)
-    plt.savefig('/Users/funnyboo/Desktop/name.pdf')
+    #print(args.output)
+    #/Users/funnyboo/Desktop
+    plt.savefig('{}/name.pdf'.format(args.output),bbox_inches='tight')
 
-plot_Fst()
+rainbow_Fst()
