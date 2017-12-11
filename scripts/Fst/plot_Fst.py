@@ -11,6 +11,7 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('-i','--input',metavar='File',dest='input',help='input file',type=open,required=True)
 parser.add_argument('-t','--threshold',metavar='Int',dest='trhd',help='threshold',type=float,default=0.15)
+parser.add_argument('-c','--color',metavar='Int',dest='color',help='color mode',type=int,default=2)
 args = parser.parse_args()
 ###### arguments ######
 
@@ -47,32 +48,46 @@ def plot_Fst():
         l.append(abl[i])
     #print(l)
     ######################
-    ## color ##
-    cr = (0.82,0.28,0.27)
-    cy = (0.82,0.72,0.27)
-    cg = (0.51,0.84,0.27)
-    cgb = (0.35,0.84,0.42)
-    cc = (0.30,0.80,0.82)
-    cb = (0.27,0.34,0.82)
-    cp = (0.55,0.22,0.82)
-    cm = (0.82,0.22,0.64)
-    ## color ##
     efp = FP('Times New Roman')
 
-    for iii in abl.keys():
-        if iii == 1:
-            #print(range(1,abl[iii]+1))
-            #print(ab[iii])
-            plt.scatter(range(1,abl[iii]+1),ab[iii],edgecolor = 'none',s = 12,c = cr,alpha=0.65)
-        elif iii == 2:
-            #print(range(l[0]+1,sum(l[0:2])+1))
-            #print(ab[iii])
-            plt.scatter(range(l[0]+1,sum(l[0:2])+1),ab[iii],edgecolor = 'none',s = 12,c = cy,alpha=0.65)
-        else:
-            #print(range(sum(l[0:iii-1])+1,sum(l[0:iii])+1))
-            #print(ab[iii])
-            cvalue = ['n','n','n',cg,cgb,cc,cb,cp,cm,cr,cy,cg,cgb,cc,cb,cp,cm,cr,cy,cg,cgb,cc,cb,cp,cm,cr,cy,cg,cgb,cc,cb,cp,cm,cr,cy]
-            plt.scatter(range(sum(l[0:iii-1])+1,sum(l[0:iii])+1),ab[iii],edgecolor = 'none',s = 12,c = cvalue[iii],alpha=0.65)
+    if args.color == 2:
+        def circle(x):
+            if -1*np.cos(np.pi*x) == 1:
+                return (0.78,0.78,0.78)
+            else:
+                return (0.43,0.43,0.43)
+        for iii in abl.keys():
+            if iii == 1:
+                plt.scatter(range(1,abl[iii]+1),ab[iii],edgecolor = 'none',s = 12,c = circle(iii),alpha=0.65)
+            elif iii == 2:
+                plt.scatter(range(l[0]+1,sum(l[0:2])+1),ab[iii],edgecolor = 'none',s = 12,c = circle(iii),alpha=0.65)
+            else:
+                plt.scatter(range(sum(l[0:iii-1])+1,sum(l[0:iii])+1),ab[iii],edgecolor = 'none',s = 12,c = circle(iii),alpha=0.65)
+    else:
+        ## color ##
+        cr = (0.82,0.28,0.27)
+        cy = (0.82,0.72,0.27)
+        cg = (0.51,0.84,0.27)
+        cgb = (0.35,0.84,0.42)
+        cc = (0.30,0.80,0.82)
+        cb = (0.27,0.34,0.82)
+        cp = (0.55,0.22,0.82)
+        cm = (0.82,0.22,0.64)
+        ## color ##
+        for iii in abl.keys():
+            if iii == 1:
+                #print(range(1,abl[iii]+1))
+                #print(ab[iii])
+                plt.scatter(range(1,abl[iii]+1),ab[iii],edgecolor = 'none',s = 12,c = (0.82,0.28,0.27),alpha=0.65)
+            elif iii == 2:
+                #print(range(l[0]+1,sum(l[0:2])+1))
+                #print(ab[iii])
+                plt.scatter(range(l[0]+1,sum(l[0:2])+1),ab[iii],edgecolor = 'none',s = 12,c = (0.82,0.72,0.27),alpha=0.65)
+            else:
+                #print(range(sum(l[0:iii-1])+1,sum(l[0:iii])+1))
+                #print(ab[iii])
+                cvalue = ['n','n','n',cg,cgb,cc,cb,cp,cm,cr,cy,cg,cgb,cc,cb,cp,cm,cr,cy,cg,cgb,cc,cb,cp,cm,cr,cy,cg,cgb,cc,cb,cp,cm,cr,cy]
+                plt.scatter(range(sum(l[0:iii-1])+1,sum(l[0:iii])+1),ab[iii],edgecolor = 'none',s = 12,c = cvalue[iii],alpha=0.65)
     #plt.show()
     ## plot information
     plt.ylim(args.trhd,0.55)
