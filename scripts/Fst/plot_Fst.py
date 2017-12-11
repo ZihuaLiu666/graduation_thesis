@@ -48,8 +48,7 @@ def plot_Fst():
         l.append(abl[i])
     #print(l)
     ######################
-    efp = FP('Times New Roman')
-
+    
     if args.color == 2:
         def circle(x):
             if -1*np.cos(np.pi*x) == 1:
@@ -101,6 +100,7 @@ def plot_Fst():
     ####
     #plt.axes().get_xaxis().set_visible(False)
     ####
+    efp = FP('Times New Roman')
     plt.title('Fst (>= {}) among genome SNPs'.format(args.trhd),fontsize=16,fontproperties=efp)
     plt.xlabel('relative position',fontsize=14,fontproperties=efp)
     plt.ylabel('Fst',fontsize=14,fontproperties=efp)
