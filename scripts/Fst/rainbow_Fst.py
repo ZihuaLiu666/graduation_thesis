@@ -72,7 +72,9 @@ def rainbow_Fst():
         l.append(abl[i])
     #print(l)
     ######################
-
+    # Set your customized figure scale, if you need a long x axis, please use the paprameter below
+    #plt.figure(figsize = (14,4))
+    ######################
     if args.color == 2:
         def circle(x):
             if -1*np.cos(np.pi*x) == 1:
