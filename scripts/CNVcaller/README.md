@@ -14,7 +14,7 @@ Interested about the [introduction](https://www.nature.com/articles/nrg3871)? Se
 
   example: `perl` `/home/jiangyu/zihua/software/CNVcaller-master/bin/CNVReferenceDB.pl` `/home/jiangyu/zihua/software/CNVcaller-master/29.fa` `-w` `1000`
 
-  Notice: there are another three optional parameters - `-l 0.2 (minimum GC content within a window)`, `-u 0.7 (maximum GC content within a window)` and `-g 0.5 (minimum gap content within a window)`
+  Notice: there are another three optional parameters - `-l 0.2 (minimum GC content within a window)`, `-u 0.7 (maximum GC content within a window)` and `-g 0.5 (maximum gap content within a window)`
 
   you will get a database file:
     * `/home/jiangyu/zihua/software/CNVcaller-master/referenceDB.1000`
