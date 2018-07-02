@@ -1,5 +1,10 @@
 # graduation thesis
 
+***
+:volcano: All these perl scripts are from Zhengkui Zhou.
+***
+
+
 ### STEP 1: Principle Component Analysis
 * convert snp table file to .geno, .ind and .snp files (perl script `VCFtable2eigen_geno_snp_ind.pl` needed, which is in the scripts subdirectory)
 
